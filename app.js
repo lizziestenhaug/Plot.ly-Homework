@@ -15,8 +15,8 @@ function getPlot(id) {
 
         //get otu ID labels
         var idValues = (samples.otu_ids.slice(0, 10)).reverse();
-        var idOTU = idValues.map(d => "OTU" + d)
-        console.log(`OTU IDS: ${idOTU}`)
+        var idOtu = idValues.map(d => "OTU" + d)
+        console.log(`OTU IDS: ${idOtu}`)
 
         
         //get otu labels for chart
@@ -27,7 +27,7 @@ function getPlot(id) {
         //create trace for bar chart
         var trace = {
             x: sampleValues,
-            y: idOTU,
+            y: idOtu,
             text: labels,
             type: "bar",
             orientation: "h",
@@ -76,7 +76,7 @@ function getPlot(id) {
 
 //Trace for pie chart
         var trace2 = {
-            labels: idOTU,
+            labels: idOtu,
             values: sampleValues,
             type: "pie",
         }
@@ -124,7 +124,7 @@ function init() {
         data.names.forEach(function(name) {
             dropdown.append("option").text(name).property("values");
         });
-        
+
         getPlot(data.names[0]);
         getInfo(data.names[0]);
     });
