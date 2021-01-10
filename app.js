@@ -50,32 +50,85 @@ function getPlot(id) {
 
         Plotly.newPlot("bar", data, layout);
 
-    })
-}
-
 //create trace for bubble chart
-var trace1 = {
-    x: samples.otu_ids,
-    y: samples.sample_values,
-    mode: "markers",
-    marker: {
-        size: samples.sample_values,
-        color: samples.otu_ids
-    },
-    text: samples.otu_labels
-};
+        var trace1 = {
+            x: samples.otu_ids,
+            y: samples.sample_values,
+            mode: "markers",
+            marker: {
+                size: samples.sample_values,
+                color: samples.otu_ids
+            },
+            text: samples.otu_labels
+        };
 
 //layout for bubble plot
-var layout = {
-    xaxis: {title: "OTU ID"},
-    height: 600,
-    width: 1300
-};
+        var layout = {
+            xaxis: {title: "OTU ID"},
+            height: 600,
+            width: 1300
+        };
 
-var data1 = [trace1];
+        var data1 = [trace1];
 
-Plotly.newPlot("bubble", data1, layout);
+        Plotly.newPlot("bubble", data1, layout);
 
+
+//Trace for pie chart
+        var trace2 = {
+            labels: idOTU,
+            values: sampleValues,
+            type: "pie",
+        }
+
+        var data = [trace2]
+
+        Plotly.newplot("gauge", data)
+
+    });
+}
+
+//data function
+function getInfo(id) {
+    d3.json("data/samples.json").then((data)=> {
+
+        var metadata = data.metadata;
+        
+        console.log(metadata)
+
+        var result = metadata.filter(meta => meta.id.toString() === id)[0];
+
+        var demographicInfo = d3.select("#sample-metadata");
+
+        demographicInfo.html("");
+
+        Object.defineProperties(result).forEach((key) => {
+            demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] +"\n");
+        });
+    });
+}
+
+//function for plot change 
+function optionChanged(id) {
+    getPlot(id);
+    getInfo(id);
+}
+
+//data function
+function init() {
+    var dropdown = d3.select("#selDataset");
+
+    d3.json("data.samples.json").then((data)=> {
+        console.log(data)
+
+        data.names.forEaech(function(name) {
+            dropdown.append("option").text(name).property("values");
+        });
+        getPlot(data.names[0]);
+        getInfo(data.names[0]);
+    });
+}
+init();
 
 
 
