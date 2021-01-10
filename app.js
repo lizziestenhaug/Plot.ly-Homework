@@ -102,8 +102,8 @@ function getInfo(id) {
 
         demographicInfo.html("");
 
-        Object.defineProperties(result).forEach((key) => {
-            demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] +"\n");
+        Object.entries(result).forEach((key) => {
+                demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] +"\n");
         });
     });
 }
@@ -118,12 +118,13 @@ function optionChanged(id) {
 function init() {
     var dropdown = d3.select("#selDataset");
 
-    d3.json("data.samples.json").then((data)=> {
+    d3.json("data/samples.json").then((data)=> {
         console.log(data)
 
-        data.names.forEaech(function(name) {
+        data.names.forEach(function(name) {
             dropdown.append("option").text(name).property("values");
         });
+        
         getPlot(data.names[0]);
         getInfo(data.names[0]);
     });
