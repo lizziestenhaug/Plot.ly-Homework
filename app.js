@@ -24,7 +24,7 @@ function getPlot(id) {
         console.log(`Samples Values: ${samplesValues}`)
         console.log(`Id Values: $idValues}`)
 
-        //create trace
+        //create trace for bar chart
         var trace = {
             x: sampleValues,
             y: idOTU,
@@ -52,5 +52,30 @@ function getPlot(id) {
 
     })
 }
+
+//create trace for bubble chart
+var trace1 = {
+    x: samples.otu_ids,
+    y: samples.sample_values,
+    mode: "markers",
+    marker: {
+        size: samples.sample_values,
+        color: samples.otu_ids
+    },
+    text: samples.otu_labels
+};
+
+//layout for bubble plot
+var layout = {
+    xaxis: {title: "OTU ID"},
+    height: 600,
+    width: 1300
+};
+
+var data1 = [trace1];
+
+Plotly.newPlot("bubble", data1, layout);
+
+
 
 
