@@ -37,6 +37,7 @@ function getPlot(id) {
 
         //plot layout
         var layout = {
+            title: "",
             yaxis:{
                 tickmode:"linear",
             },
@@ -75,13 +76,13 @@ function getPlot(id) {
 
 
 //Trace for pie chart
-        var trace2 = {
+        var tracePie = {
             labels: idOtu,
             values: sampleValues,
             type: "pie",
         }
 
-        var data = [trace2]
+        var data = [tracePie]
 
         Plotly.newplot("gauge", data)
 
